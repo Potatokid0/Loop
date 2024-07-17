@@ -35,9 +35,13 @@
         totalJumps = 2;
         currentJumps = 0;
         animations;
+        isWalking;
+        isJumping;
         constructor(scene, x, y, spritesheet, animations)
         {
             super(scene, x, y, spritesheet);
+            this.isWalking = false;
+            this.isJumping = false;
             this.animations = animations;
             scene.add.existing(this);
             scene.physics.add.existing(this);
@@ -88,7 +92,7 @@
        let playerAnimations = {};
        var idle = this.anims.create({key: 'tim_idle', frames: this.anims.generateFrameNames('tim_idle', {prefix: 'pixil-frame-', end: 6, zeroPad: 1}), repeat: -1, frameRate: 6});
        playerAnimations['idle'] = idle;
-       var jump = this.anims.create({key: 'tim_jump', frames: this.anims.generateFrameNames('tim_jump', {prefix: 'pixil-frame-', end: 7, zeroPad: 1}), repeat: 1, frameRate: 7});
+       var jump = this.anims.create({key: 'tim_jump', frames: this.anims.generateFrameNames('tim_jump', {prefix: 'pixil-frame-', end: 7, zeroPad: 1}), repeat: 1, frameRate: 4});
        playerAnimations['jump'] = jump; 
        var walk = this.anims.create({key: 'tim_walk', frames: this.anims.generateFrameNames('tim_walk', {prefix: 'pixil-frame-', end: 11, zeroPad: 1}), repeat: 1, frameRate: 11});
        playerAnimations['walk'] = walk; 
@@ -109,6 +113,8 @@
        
        this.cameras.main.setBounds(0, 0, 3000, 700);
        this.cameras.main.startFollow(player, true, 0.05, 0.05);
+
+       
     }
 
     function createPlatforms(scene)
@@ -131,32 +137,50 @@
         //Player has "drag" on the x-axis meaning they slide a bit after an input
         player.setDragX(1000);
 
+        if (player.body.velocity.x === 0){
+            player.isWalking = false;
+        }
+
+
         //This will reset the number of jumps available to the player whenever the player lands
         if (player.body.touching.down) {
             player.currentJumps = 0;
+            player.isJumping = false;
         }
         
         //Handle player movements
         if (cursors.left.isDown || keys.A.isDown)
         {
+            player.isWalking = true;
+            player.flipX = true;
+            if (!player.isJumping){
+                player.play(player.animations['walk'], true);
+            }
             player.setVelocityX(-400);
         }
+        
 
         if (cursors.right.isDown || keys.D.isDown)
         {
-            player.play(player.animations['walk']);
+            player.flipX = false;
+            player.isWalking = true;
+            if (!player.isJumping){
+                player.play(player.animations['walk'], true);
+            }
             player.setVelocityX(400);
             
         }
         
-        //player.play(player.animations['idle']);
-    
-
+        if (!player.isWalking && !player.isJumping){
+            player.play(player.animations['idle'], true);
+        }
+        
     }
 
     function jumpFunction(event)
     {
-        player.play(player.animations['jump']);
+        player.play(player.animations['jump'], true);
+        player.isJumping = true;
         if (player.body.touching.down) {
           //If the player is on the ground, the player can jump
           player.setVelocityY(-1100);
