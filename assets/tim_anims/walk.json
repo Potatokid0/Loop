@@ -1,11 +1,11 @@
 {
 	"frames": {
-		"pixil-frame-0": {
+		"pixil-frame-1": {
 			"frame": {
 				"x": 1,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -13,39 +13,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
-			}
-		},
-		"pixil-frame-1": {
-			"frame": {
-				"x": 16,
-				"y": 1,
-				"w": 13,
-				"h": 13
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 13,
-				"h": 13
-			},
-			"sourceSize": {
-				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-10": {
 			"frame": {
-				"x": 31,
+				"x": 16,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -53,19 +33,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-11": {
 			"frame": {
-				"x": 46,
+				"x": 31,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -73,19 +53,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-2": {
 			"frame": {
-				"x": 61,
+				"x": 46,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -93,19 +73,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-3": {
 			"frame": {
-				"x": 76,
+				"x": 61,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -113,19 +93,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-4": {
 			"frame": {
-				"x": 91,
+				"x": 76,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -133,19 +113,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-5": {
 			"frame": {
-				"x": 106,
+				"x": 91,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -153,19 +133,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-6": {
 			"frame": {
-				"x": 121,
+				"x": 106,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -173,19 +153,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-7": {
 			"frame": {
-				"x": 136,
+				"x": 121,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -193,19 +173,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-8": {
 			"frame": {
-				"x": 151,
+				"x": 136,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -213,19 +193,19 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		},
 		"pixil-frame-9": {
 			"frame": {
-				"x": 166,
+				"x": 151,
 				"y": 1,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"rotated": false,
 			"trimmed": false,
@@ -233,11 +213,11 @@
 				"x": 0,
 				"y": 0,
 				"w": 13,
-				"h": 13
+				"h": 15
 			},
 			"sourceSize": {
 				"w": 13,
-				"h": 13
+				"h": 15
 			}
 		}
 	},
@@ -247,8 +227,8 @@
 		"image": "spritesheet",
 		"format": "RGBA8888",
 		"size": {
-			"w": 180,
-			"h": 15
+			"w": 165,
+			"h": 17
 		},
 		"scale": "1"
 	}
