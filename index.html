@@ -139,6 +139,8 @@
         basePlatform = platforms.create(game.scale.width/2, game.scale.height-15, 'platform');
         basePlatform.setScale(15, 1).refreshBody(); //scales the base platform in the x axis to cover the entire floor
         basePlatform.setVisible(false);
+
+        platforms.create(4400, 2400, 'platform');
         
         trigger = triggers.create(4250, game.scale.height-15, 'platform');
         trigger.setScale(2, 3);
