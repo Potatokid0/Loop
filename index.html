@@ -57,6 +57,10 @@
     //Game Objects
     //Sai is so damn cool man
     var platforms;
+    var trigger;
+    var triggers;
+    var basePlatform;
+    var newBase
     var player;
 
     //Keyboard controls
@@ -71,7 +75,8 @@
 
     function preload()
     {
-        this.load.image('hall1', 'assets/hall1.png');
+        this.load.image('hall1', 'assets/hall3.png');
+        this.load.image('level', 'assets/LevelHallway.png');
         this.load.image('platform', 'assets/platform2.png');
         this.load.image('tim', 'assets/tim_anims/tim.png')
         this.load.atlas('tim_idle', 'assets/tim_anims/idle.png', 'assets/tim_anims/idle.json');
@@ -81,12 +86,13 @@
 
     function create()
     {
-        //Set the background origin to be at (0, 0) or top left corner of the image rather than the center of the image asset
-       let background = this.add.tileSprite(0, 0, game.scale.width, game.scale.height, 'hall1').setOrigin(0, 0);
+       //hallway
+       let background = this.add.image(0, 0, 'hall1').setOrigin(0, 0);
         background.setScale(5);
-        
        
-       
+       //level
+       let level = this.add.image(3750, 750, 'level').setOrigin(0, 0);
+        level.setScale(5); 
         
        //anims
        let playerAnimations = {};
@@ -97,7 +103,7 @@
        var walk = this.anims.create({key: 'tim_walk', frames: this.anims.generateFrameNames('tim_walk', {prefix: 'pixil-frame-', end: 11, zeroPad: 1}), repeat: 1, frameRate: 11});
        playerAnimations['walk'] = walk; 
        
-       //Create the platforms and the player character set to collide with the platforms
+       //floor
        createPlatforms(this);
        player = new Player(this, 400, 400, 'tim', playerAnimations);
        player.setScale(15)
@@ -114,19 +120,30 @@
        this.cameras.main.setBounds(0, 0, 4300, 750);
        this.cameras.main.startFollow(player, true, 0.05, 0.05);
 
+       this.physics.add.overlap(player, triggers, function() {
+           fall();
+           this.cameras.main.setBounds(3700,0, 4840, 2750);
+           newBase = platforms.create(3750, 2750, 'platform');
+           newBase.setScale(25, 1).refreshBody(); //scales the base platform in the x axis to cover the entire floor
+           newBase.setVisible(false);
+        }, null, this);
+
        
     }
 
     function createPlatforms(scene)
     {
         platforms = scene.physics.add.staticGroup();
-
+        triggers = scene.physics.add.staticGroup();
         //basePlatform is the floor of the game
-        let basePlatform = platforms.create(game.scale.width/2, game.scale.height-15, 'platform');
+        basePlatform = platforms.create(game.scale.width/2, game.scale.height-15, 'platform');
         basePlatform.setScale(15, 1).refreshBody(); //scales the base platform in the x axis to cover the entire floor
         basePlatform.setVisible(false);
-        //platforms.create(250, 350, 'platform'); //creates the upper left platform
-        //platforms.create(950, 500, 'platform'); //creates the bottome right platform
+        
+        trigger = triggers.create(4250, game.scale.height-15, 'platform');
+        trigger.setScale(2, 3);
+        trigger.refreshBody();
+        trigger.setVisible(false);
     }
 
     function update()
@@ -156,7 +173,7 @@
             if (!player.isJumping){
                 player.play(player.animations['walk'], true);
             }
-            player.setVelocityX(-400);
+            player.setVelocityX(-800);
         }
         
 
@@ -167,7 +184,7 @@
             if (!player.isJumping){
                 player.play(player.animations['walk'], true);
             }
-            player.setVelocityX(400);
+            player.setVelocityX(800);
             
         }
         
@@ -196,6 +213,11 @@
           }
           player.currentJumps++;
         }
+    }
+    function fall(event){
+        trigger.disableBody(true, true);
+        basePlatform.disableBody(true, true);
+        console.log("fell")
     }
     
 
