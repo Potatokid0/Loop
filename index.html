@@ -37,6 +37,10 @@
         animations;
         isWalking;
         isJumping;
+        anom = false;
+        onFirst = true;
+        pickedAnom = false;
+        levelOn = 0;
         constructor(scene, x, y, spritesheet, animations)
         {
             super(scene, x, y, spritesheet);
@@ -55,13 +59,13 @@
     var game = new Phaser.Game(config);
 
     //Game Objects
-    //Sai is so damn cool man
     var platforms;
     var trigger;
     var triggers;
     var basePlatform;
     var newBase
     var player;
+    var light;
 
     //Keyboard controls
     var cursors;
@@ -78,7 +82,10 @@
         this.load.image('hall1', 'assets/hall3.png');
         this.load.image('level', 'assets/LevelHallway.png');
         this.load.image('platform', 'assets/platform2.png');
-        this.load.image('tim', 'assets/tim_anims/tim.png')
+        this.load.image('tim', 'assets/tim_anims/tim.png');
+        this.load.image('black', 'assets/black.jpg');
+        this.load.image('light', 'assets/lighting.png');
+        this.load.image('platlock', 'assets/LockerPlatform.png');
         this.load.atlas('tim_idle', 'assets/tim_anims/idle.png', 'assets/tim_anims/idle.json');
         this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
@@ -103,6 +110,15 @@
        var walk = this.anims.create({key: 'tim_walk', frames: this.anims.generateFrameNames('tim_walk', {prefix: 'pixil-frame-', end: 11, zeroPad: 1}), repeat: 1, frameRate: 11});
        playerAnimations['walk'] = walk; 
        
+       let black = this.add.image(0, 0, 'black').setOrigin(0,0);
+       black.setScale(100);
+       black.setAlpha(.85);
+
+       light = this.add.image(0,0, 'light');
+       light.setScale(15);
+       light.setAlpha(.60);
+       //light.setBlendMode('EXCLUSION'); 
+
        //floor
        createPlatforms(this);
        player = new Player(this, 400, 400, 'tim', playerAnimations);
@@ -122,13 +138,67 @@
 
        this.physics.add.overlap(player, triggers, function() {
            fall();
-           this.cameras.main.setBounds(3700,0, 4840, 2750);
+           this.cameras.main.setBounds(3700,0, 4850, 2750);
            newBase = platforms.create(3750, 2750, 'platform');
            newBase.setScale(25, 1).refreshBody(); //scales the base platform in the x axis to cover the entire floor
            newBase.setVisible(false);
+           nextLevel(1, this);
         }, null, this);
 
        
+    }
+
+    function bookRoom (){
+        //first level, no anoms so always the correct answer is no anoms
+        //load bookroom
+        if (player.onFirst === true){
+            player.onFirst = false;
+            if (player.pickedAnom === false){
+                //random if actual nextLevel or if anom level
+                //call nextLevel 1
+            }
+        }
+        else {
+            //check player .levelOn and add +1 if randomly nextLevel or base the anom level on it
+            //see if player picked correct
+        }
+    }
+
+    function anomLevel(){
+        //check player.levelOn
+        //randomly put assets in certain places
+        //set player.anom
+    }
+
+    function nextLevel(num, scene){
+        //4 enemies, enemies are not anomelies... so basically randomly if your left was diff or not
+        if (num === 1){
+            
+        }
+        else if (num === 2){
+
+        }
+        else if (num === 3){
+
+        }
+        else if (num === 4){
+
+        }
+        else if (num === 5){
+
+        }
+        else if (num === 6){
+
+        }
+        else {
+            //ex num === 0
+        }
+    }
+
+    function death (){
+        //disableBody of all characters
+        //gui saying DEATH
+        //after enemy (most) touches player or if picked wrong option in bookRoom
     }
 
     function createPlatforms(scene)
@@ -154,6 +224,9 @@
         //Player will not move in the x-axis unless a movement key is being pressed
         player.setVelocityX(0);
 
+        //lighting
+        light.setX(player.x);
+        light.setY(player.y);
         //Player has "drag" on the x-axis meaning they slide a bit after an input
         player.setDragX(1000);
 
