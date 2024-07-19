@@ -94,6 +94,7 @@
     var girl;
     var died;
     var jumpy;
+    var notebook;
 
     //Keyboard controls
     var cursors;
@@ -121,7 +122,8 @@
         this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
         this.load.audio('theme', 'music/maintheme.wav')
-        this.load.image('girl', 'assets/girl.webp')
+        this.load.image('girl', 'assets/girl.webp');
+        this.load.image('notebook', 'assets/notebookOBJ.png')
         this.load.atlas('jumpscare', 'jumpscare.png', 'jumpscare.json')
         this.load.atlas('tim_idle', 'assets/tim_anims/idle.png', 'assets/tim_anims/idle.json');
         this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
@@ -207,6 +209,11 @@
            light.setDepth(6);
            player.setDepth(7);
            ghostMade = true;
+           this.physics.add.overlap(player, notebook, function () {
+            let win = this.add.image(player.x, player.y, 'hall1').setOrigin(0, 0);
+            win.setScale(5);
+            win.setDepth(10);
+           }, null, this);
            this.physics.add.overlap(player, ghost, function (){
                jumpy = new Jumpscare(this, player.x, player.y, 'jumpscare', jumpAnimations);
                jumpy.play(jumpy.animations['scare'], true);
@@ -347,6 +354,10 @@
             shortPlatforms = platforms.create(6600, 900, 'shelf');
             shortPlatforms.setScale(4,2).refreshBody();
             shortPlatforms.setDepth(6);
+
+            notebook = platforms.create(4440, 2500, 'notebook');
+            notebook.setScale(4);
+            notebook.setDepth(6);
 
         }
         else if (num === 2){
