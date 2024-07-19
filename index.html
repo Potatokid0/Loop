@@ -121,10 +121,10 @@
     {
 
         //plays music
-        let theme = this.add.audio('theme');
-        const music = this.sound.add('theme');
-        loop = true;
-        music.play();
+        //let theme = this.add.audio('theme');
+        //const music = this.sound.add('theme');
+        //loop = true;
+        //music.play();
 
        //hallway
        let background = this.add.image(0, 0, 'hall1').setOrigin(0, 0);
@@ -192,11 +192,11 @@
            player.setDepth(7);
            ghostMade = true;
            this.physics.add.overlap(player, ghost, function (){
-               girl = this.add.image(player.x, player.y - 250, 'girl');
+               girl = this.add.image(player.x, player.y, 'girl');
                girl.setScale(2);
                girl.setDepth(8);
                died = true;
-               this.cameras.main.startFollow(player, true, 1, 1);
+               //this.cameras.removeBounds();
            }, null, this);
         }, null, this);
 
