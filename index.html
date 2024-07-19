@@ -66,6 +66,16 @@
         }
     }
 
+    class Jumpscare extends Phaser.Physics.Arcade.Sprite{
+        animations;
+        constructor(scene, x, y, spritesheet, animations){
+            super(scene, x, y, spritesheet);
+            this.animations = animations;
+            scene.add.existing(this);
+            //scene.physics.add.existing(this);
+            //this.setGravityY(3000);
+        }
+    }
 
     var game = new Phaser.Game(config);
 
@@ -83,6 +93,7 @@
     var ghostMade;
     var girl;
     var died;
+    var jumpy;
 
     //Keyboard controls
     var cursors;
@@ -111,6 +122,7 @@
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
         this.load.audio('theme', 'music/maintheme.wav')
         this.load.image('girl', 'assets/girl.webp')
+        this.load.atlas('jumpscare', 'jumpscare.png', 'jumpscare.json')
         this.load.atlas('tim_idle', 'assets/tim_anims/idle.png', 'assets/tim_anims/idle.json');
         this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
@@ -146,6 +158,10 @@
        let ghostAnimations= {};
        var ghostWalk = this.anims.create({key: 'ghost', frames: this.anims.generateFrameNames('ghost', {prefix: 'pixil-frame-', end: 14, zeroPad: 1}), repeat: -1, frameRate: 9});
        ghostAnimations['walk'] = ghostWalk; 
+
+       let jumpAnimations= {};
+       var scare = this.anims.create({key: 'jumpscare', frames: this.anims.generateFrameNames('jumpscare', {prefix: 'jumpscare', end: 3, zeroPad: 1}), repeat: 0, frameRate: 9});
+       jumpAnimations['scare'] = scare; 
 
        //lighting
        let black = this.add.image(0, 0, 'black').setOrigin(0,0);
@@ -183,7 +199,7 @@
            newBase.setVisible(false);
            nextLevel(1, this);
            ghost = new Enemy(this, 6000, 2000, 'ghost', ghostAnimations);
-           this.physics.add.collider(ghost, platforms);
+           //this.physics.add.collider(ghost, platforms);
            ghost.play(ghost.animations['walk'], true);
            ghost.setScale(10);
            ghost.setDepth(4);
@@ -192,9 +208,10 @@
            player.setDepth(7);
            ghostMade = true;
            this.physics.add.overlap(player, ghost, function (){
-               girl = this.add.image(player.x, player.y, 'girl');
-               girl.setScale(2);
-               girl.setDepth(8);
+               jumpy = new Jumpscare(this, player.x, player.y, 'jumpscare', jumpAnimations);
+               jumpy.play(jumpy.animations['scare'], true);
+               jumpy.setScale(3);
+               jumpy.setDepth(8);
                died = true;
                //this.cameras.removeBounds();
            }, null, this);
