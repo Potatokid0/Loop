@@ -131,6 +131,8 @@
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
         this.load.atlas('ghost', 'assets/ghost.png', 'assets/ghost.json');
         this.load.audio('theme', 'maintheme.wav');
+        this.load.audio('scareysound', 'jumpscare sfx.wav');
+        this.load.audio('walksound', 'walk sfx.wav');
     }
 
     function create()
@@ -140,6 +142,8 @@
         const music = this.sound.add('theme');
         music.loop = true;
         music.play();
+
+        //const walksound = this.sound.add('walksound');
 
        //hallway
        let background = this.add.image(0, 0, 'hall1').setOrigin(0, 0);
@@ -221,6 +225,10 @@
                jumpy.play(jumpy.animations['scare'], true);
                jumpy.setScale(3);
                jumpy.setDepth(8);
+               //scareysound
+               const scarey = this.sound.add('scareysound');
+               scarey.play();
+               music.stop();
                died = true;
                //this.cameras.removeBounds();
            }, null, this);
