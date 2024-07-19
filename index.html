@@ -63,9 +63,11 @@
     var trigger;
     var triggers;
     var basePlatform;
-    var newBase
+    var newBase;
+    var shortPlatforms;
     var player;
     var light;
+    var theme
 
     //Keyboard controls
     var cursors;
@@ -86,13 +88,24 @@
         this.load.image('black', 'assets/black.jpg');
         this.load.image('light', 'assets/lighting.png');
         this.load.image('platlock', 'assets/LockerPlatform.png');
+        this.load.image('sidelocker', 'assets/lockerside.png');
+        this.load.image('shelf', 'assets/shelf.png');
+        this.load.image('bookshelf', 'assets/bookshelf.png');
         this.load.atlas('tim_idle', 'assets/tim_anims/idle.png', 'assets/tim_anims/idle.json');
         this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
+        this.load.audio('theme', 'music/maintheme.wav')
     }
 
     function create()
     {
+
+        //plays music
+        let theme = this.add.audio('theme');
+        const music = this.sound.add('theme');
+        loop = true;
+        music.play();
+
        //hallway
        let background = this.add.image(0, 0, 'hall1').setOrigin(0, 0);
         background.setScale(5);
@@ -172,8 +185,78 @@
 
     function nextLevel(num, scene){
         //4 enemies, enemies are not anomelies... so basically randomly if your left was diff or not
-        if (num === 1){
+        if (num === 1)
+        {
+
+            shortPlatforms = platforms.create(4400, 2450, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(5000, 2250, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(5900, 2450, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(6500, 2450, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(5900, 2050, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+            shortPlatforms = platforms.create(6200, 2050, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+            shortPlatforms = platforms.create(6500, 2050, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+
+            shortPlatforms = platforms.create(5000, 2250, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(7300, 2150, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(7900, 2450, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(6200, 1700, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+            shortPlatforms = platforms.create(6500, 1700, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+            shortPlatforms = platforms.create(6800, 1700, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+
+            shortPlatforms = platforms.create(7900, 1875, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+            shortPlatforms = platforms.create(8200, 1875, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+
+            shortPlatforms = platforms.create(7500, 1500, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(7900, 1200, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(7000, 1200, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(8300, 1000, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(6200, 1200, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
+            shortPlatforms = platforms.create(6300, 1200, 'shelf');
+            shortPlatforms.setScale(6,2).refreshBody();
             
+            shortPlatforms = platforms.create(5000, 1875, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(4400, 1600, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(5000, 1400, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
+            shortPlatforms = platforms.create(6600, 900, 'shelf');
+            shortPlatforms.setScale(4,2).refreshBody();
+
         }
         else if (num === 2){
 
@@ -209,9 +292,6 @@
         basePlatform = platforms.create(game.scale.width/2, game.scale.height-15, 'platform');
         basePlatform.setScale(15, 1).refreshBody(); //scales the base platform in the x axis to cover the entire floor
         basePlatform.setVisible(false);
-
-        platforms.create(4400, 2400, 'platform');
-        platforms.create(4800, 2200, 'platform');
         
         trigger = triggers.create(4250, game.scale.height-15, 'platform');
         trigger.setScale(2, 3);
@@ -249,7 +329,7 @@
             if (!player.isJumping){
                 player.play(player.animations['walk'], true);
             }
-            player.setVelocityX(-800);
+            player.setVelocityX(-600);
         }
         
 
@@ -260,7 +340,7 @@
             if (!player.isJumping){
                 player.play(player.animations['walk'], true);
             }
-            player.setVelocityX(800);
+            player.setVelocityX(600);
             
         }
         
@@ -276,7 +356,7 @@
         player.isJumping = true;
         if (player.body.touching.down) {
           //If the player is on the ground, the player can jump
-          player.setVelocityY(-1100);
+          player.setVelocityY(-1325);
           player.currentJumps++;
         } else if (player.currentJumps < player.totalJumps) {
           //If the player is not on the ground but has an available air jump, use that jump
