@@ -55,6 +55,17 @@
         }
     }
 
+    class Enemy extends Phaser.Physics.Arcade.Sprite{
+        animations;
+        constructor(scene, x, y, spritesheet, animations){
+            super(scene, x, y, spritesheet);
+            this.animations = animations;
+            scene.add.existing(this);
+            scene.physics.add.existing(this);
+            this.setGravityY(3000);
+        }
+    }
+
 
     var game = new Phaser.Game(config);
 
@@ -67,7 +78,14 @@
     var shortPlatforms;
     var player;
     var light;
+<<<<<<< HEAD
     var theme
+=======
+    var ghost;
+    var ghostMade;
+    var girl;
+    var died;
+>>>>>>> 16ad77c284779fe9228e53f7ebfa44c73ba6eda2
 
     //Keyboard controls
     var cursors;
@@ -88,6 +106,7 @@
         this.load.image('black', 'assets/black.jpg');
         this.load.image('light', 'assets/lighting.png');
         this.load.image('platlock', 'assets/LockerPlatform.png');
+<<<<<<< HEAD
         this.load.image('sidelocker', 'assets/lockerside.png');
         this.load.image('shelf', 'assets/shelf.png');
         this.load.image('bookshelf', 'assets/bookshelf.png');
@@ -95,6 +114,13 @@
         this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
         this.load.audio('theme', 'music/maintheme.wav')
+=======
+        this.load.image('girl', 'assets/girl.webp')
+        this.load.atlas('tim_idle', 'assets/tim_anims/idle.png', 'assets/tim_anims/idle.json');
+        this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
+        this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
+        this.load.atlas('ghost', 'assets/ghost.png', 'assets/ghost.json');
+>>>>>>> 16ad77c284779fe9228e53f7ebfa44c73ba6eda2
     }
 
     function create()
@@ -123,6 +149,11 @@
        var walk = this.anims.create({key: 'tim_walk', frames: this.anims.generateFrameNames('tim_walk', {prefix: 'pixil-frame-', end: 11, zeroPad: 1}), repeat: 1, frameRate: 11});
        playerAnimations['walk'] = walk; 
        
+       let ghostAnimations= {};
+       var ghostWalk = this.anims.create({key: 'ghost', frames: this.anims.generateFrameNames('ghost', {prefix: 'pixil-frame-', end: 14, zeroPad: 1}), repeat: -1, frameRate: 9});
+       ghostAnimations['walk'] = ghostWalk; 
+
+       //lighting
        let black = this.add.image(0, 0, 'black').setOrigin(0,0);
        black.setScale(100);
        black.setAlpha(.85);
@@ -147,8 +178,9 @@
        space.on('down', jumpFunction); //calls jump function when space is pressed
        
        this.cameras.main.setBounds(0, 0, 4300, 750);
-       this.cameras.main.startFollow(player, true, 0.05, 0.05);
+       this.cameras.main.startFollow(player, true, 0.50, 0.05);
 
+       died = false;
        this.physics.add.overlap(player, triggers, function() {
            fall();
            this.cameras.main.setBounds(3700,0, 4850, 2750);
@@ -156,11 +188,28 @@
            newBase.setScale(25, 1).refreshBody(); //scales the base platform in the x axis to cover the entire floor
            newBase.setVisible(false);
            nextLevel(1, this);
+           ghost = new Enemy(this, 6000, 2000, 'ghost', ghostAnimations);
+           this.physics.add.collider(ghost, platforms);
+           ghost.play(ghost.animations['walk'], true);
+           ghost.setScale(10);
+           ghost.setDepth(4);
+           black.setDepth(5);
+           light.setDepth(6);
+           player.setDepth(7);
+           ghostMade = true;
+           this.physics.add.overlap(player, ghost, function (){
+               girl = this.add.image(player.x, player.y - 250, 'girl');
+               girl.setScale(2);
+               girl.setDepth(8);
+               died = true;
+               this.cameras.main.startFollow(player, true, 1, 1);
+           }, null, this);
         }, null, this);
 
        
     }
 
+    
     function bookRoom (){
         //first level, no anoms so always the correct answer is no anoms
         //load bookroom
@@ -304,6 +353,19 @@
         //Player will not move in the x-axis unless a movement key is being pressed
         player.setVelocityX(0);
 
+        //ghost
+        if (ghostMade){
+            this.physics.moveToObject(ghost, player, 400);
+            if (ghost.body.velocity.x < 0){
+                ghost.flipX = true;
+            }
+            else {
+                ghost.flipX = false;
+            }
+            if (died){
+                player.disableBody(true);
+            }
+        }
         //lighting
         light.setX(player.x);
         light.setY(player.y);
