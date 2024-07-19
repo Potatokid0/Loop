@@ -130,16 +130,16 @@
         this.load.atlas('tim_jump', 'assets/tim_anims/jump.png', 'assets/tim_anims/jump.json');
         this.load.atlas('tim_walk', 'assets/tim_anims/walk.png', 'assets/tim_anims/walk.json');
         this.load.atlas('ghost', 'assets/ghost.png', 'assets/ghost.json');
+        this.load.audio('theme', 'maintheme.wav');
     }
 
     function create()
     {
 
         //plays music
-        //let theme = this.add.audio('theme');
-        //const music = this.sound.add('theme');
-        //loop = true;
-        //music.play();
+        const music = this.sound.add('theme');
+        music.loop = true;
+        music.play();
 
        //hallway
        let background = this.add.image(0, 0, 'hall1').setOrigin(0, 0);
